@@ -9,8 +9,8 @@ body {
 }
 #game-board {
     display: grid;
-    grid-template-columns: repeat(20,minmax(18px,1fr));
-   grid-template-rows: repeat(20, minmax(18px,1fr));
+    grid-template-columns: repeat(20,minmax(20px,1fr));
+   grid-template-rows: repeat(20, minmax(20px,1fr));
     margin:5px;
 }
 .fs{
