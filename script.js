@@ -15,6 +15,7 @@ let direction = "r";
 let gameinterval;
 let speed = 400;
 let started;
+let t = true;
 function generate_food() {
     const x = Math.floor(Math.random() * grid_size) + 1;
     const y = Math.floor(Math.random() * grid_size) + 1;
@@ -150,6 +151,7 @@ function reset() {
     console.log("g");
     snake = [{ x: 10, y: 10 }, { x: 10, y: 11 }];
     food = generate_food();
+    curr_score.textContent = "000";
     direction = "r";
     speed = 300;
     clearInterval(gameinterval); 
@@ -162,4 +164,44 @@ function stop(){
     instxt.style.display = "block"; 
 }
 
+//document.addEventListener("touchmove",key_press);
 document.addEventListener("keydown", key_press);
+
+document.addEventListener('DOMContentLoaded', function () {
+    var swipeElement = document.getElementById('swipe');
+    var initialX, initialY;
+  
+    swipeElement.addEventListener('touchstart', function (event) {
+      initialX = event.touches[0].clientX;
+      initialY = event.touches[0].clientY;
+    });
+  
+    swipeElement.addEventListener('touchmove', function (event) {
+      event.preventDefault();
+  
+      var currentX = event.touches[0].clientX;
+      var currentY = event.touches[0].clientY;
+  
+      var deltaX = currentX - initialX;
+      var deltaY = currentY - initialY;
+  
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > 0) {
+            direction = "r";
+                } 
+                else {
+                    direction = "l";        }
+      } else {
+        if (deltaY > 0) {
+            direction = "b";        } else {
+                direction = "t";        }
+      }  
+      initialX = currentX;
+      initialY = currentY;
+    });
+  
+    swipeElement.addEventListener('touchend', function () {
+       start(); 
+    });
+  });
+   
