@@ -7,9 +7,7 @@ const high_score = document.getElementById("hscore");
 let overst = false;
 let h = 0;
 let grid_size = 20;
-// let sh = [{x:10,y:13}];
-// let st = [{x:10,y:10}];
-let snake = [{x:10,y:10},{ x: 10, y: 11 },{x:10,y:12}];
+let snake = [{x:10,y:10},{ x: 10, y: 11 }];
 let food = generate_food();
 let direction = "r";
 let gameinterval;
@@ -19,7 +17,12 @@ let t = true;
 function generate_food() {
     const x = Math.floor(Math.random() * grid_size) + 1;
     const y = Math.floor(Math.random() * grid_size) + 1;
-    return { x, y };
+    for (let i = 1; i < snake.length; i++) {
+        if (x != snake[i].x && y != snake[i].y) {
+            return { x, y };
+        }
+    }
+    return generate_food()
 }
 
 function draw() {if(started){
@@ -174,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
     swipeElement.addEventListener('touchstart', function (event) {
       initialX = event.touches[0].clientX;
       initialY = event.touches[0].clientY;
-    });
+    },{passive:false});
   
     swipeElement.addEventListener('touchmove', function (event) {
       event.preventDefault();
@@ -198,10 +201,10 @@ document.addEventListener('DOMContentLoaded', function () {
       }  
       initialX = currentX;
       initialY = currentY;
-    });
+    },{passive:false});
   
     swipeElement.addEventListener('touchend', function () {
        start(); 
-    });
+    },{passive:false});
   });
    
